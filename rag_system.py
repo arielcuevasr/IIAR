@@ -1,7 +1,21 @@
+import sys
 import os
+
+# Forzar pysqlite3 antes de cualquier import
+try:
+    __import__('pysqlite3')
+    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+except ImportError:
+    pass
+
+# Configurar variables de entorno para ChromaDB
+os.environ['CHROMA_DB_IMPL'] = 'duckdb+parquet'
+os.environ['ANONYMIZED_TELEMETRY'] = 'False'
+
 import logging
 from typing import List, Optional, Dict, Any
 import chromadb
+from chromadb.config import Settings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader, PyPDFLoader, UnstructuredMarkdownLoader
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
