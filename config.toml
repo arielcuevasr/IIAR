@@ -1,0 +1,3 @@
+[server]
+# Ignora la carpeta de entorno virtual para evitar el límite de inotify
+folderWatchExclusions = ["/mount/src/iiar/venv"]
